@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>
+            Test
+        </title>
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+    </head>
+
+    <body>
+        <div class="container">
+            <fieldset>
+                <legend>Convert EUR to USD</legend>
+                <form action="/" method="post">
+                    <input name="amount" type="number" required>
+                    <input type="submit" value="Convert">
+                </form>
+            </fieldset>
+            <% if(output != null){ %>
+                <p><%= output %></p>
+            <% } %>
+
+            <% if(error != null){ %>
+                <p><%= error %></p>
+            <% } %>
+        </div>
+    </body>    
+</html>

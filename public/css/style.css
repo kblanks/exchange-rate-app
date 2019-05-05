@@ -1,0 +1,34 @@
+body{
+    width: 300px;
+    margin: 0 auto;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+}
+
+fieldset {
+    background-color: #c8cfd6;
+}
+
+legend {
+    font-size: 24px;
+}
+
+input {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+}
+
+input:focus {
+    outline-style: solid;
+    outline:black;
+}
+
+input[type=submit] {
+    background-color: #28292a;
+    color: white;
+}
+
+.container {
+    outline: 1px black;
+}
