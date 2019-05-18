@@ -11,28 +11,26 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.set('view engine', 'ejs');
 
 //initialize variables
-var outputRate=0;
 const cacheFileName='cachedData.json'
+const url = 'https://api.exchangeratesapi.io/latest?base=EUR';
+var cachedData = {}
+var outputRate=0;
 
-var cachedData = {
-}
-
-fs.readFile(cacheFileName, 'utf8', function readFileCallback(err, data){
-    if (err){
-        console.log('cache file doesnt exist yet');
-        //writeCacheData(cachedData)
-    }
-    else {
-        cachedData = JSON.parse(data);
-        let currentDate=Date.now();
-        if (cachedData.currentDate!="") {
-            console.log('value exists in cache');
+function readCacheData(){
+    let returnVal={}
+    fs.readFile(cacheFileName, 'utf8', function(err, data){
+        if (err){
+            console.log('no cache file');
         }
         else {
-            console.log('value does not exist in cache');
+            console.log('success! read file from cache');
+            parsedData = JSON.parse(data);
+            console.log(parsedData);
+            returnVal=parsedData
         }
-    }
-})
+    })
+    return returnVal
+}
 
 function writeCacheData(data){
     fs.writeFile(cacheFileName, JSON.stringify(data), 'utf8', function(err){
@@ -45,17 +43,19 @@ function writeCacheData(data){
     });
 }
 
-
 app.get('/', function (req, res){
+    cachedData = readCacheData();
     res.render('index', {output: null, error: null});
 })
 
 app.post('/', function (req, res) {
     let amount = req.body.amount;
-    let url = 'https://api.exchangeratesapi.io/latest?base=EUR';
-
-    if (outputRate != 0){
-        outputText = outputRate*amount;
+    let today = new Date()
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();   
+    if (date in cachedData){
+        console.log('using cached value to calculate output')
+        let outputRate=cachedData[date]
+        let outputText = outputRate*amount;
         res.render('index', { output: outputText, error: null});
     }
     else {
@@ -70,7 +70,7 @@ app.post('/', function (req, res) {
                     res.render('index', {output: null, error: 'Error, problem with request'});
                 }
                 else {
-                    cachedData[Date.now()]=outputRate;
+                    cachedData[date]=outputRate;
                     writeCacheData(cachedData);
                     console.log(cachedData);
                     outputText = outputRate*amount;
