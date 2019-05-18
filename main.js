@@ -11,21 +11,22 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.set('view engine', 'ejs');
 
 //initialize variables
-const cacheFileName='cachedData.json'
+const debugMode = true;
+const cacheFileName='cachedData.json';
 const url = 'https://api.exchangeratesapi.io/latest?base=EUR';
-var cachedData = {}
+var cachedData = {};
 var outputRate=0;
 
 function readCacheData(){
     let returnVal={}
     fs.readFile(cacheFileName, 'utf8', function(err, data){
         if (err){
-            console.log('no cache file');
+            if (debugMode){console.log('no cache file');}
         }
         else {
-            console.log('success! read file from cache');
+            if (debugMode){console.log('success! read file from cache');}
             parsedData = JSON.parse(data);
-            console.log(parsedData);
+            if (debugMode){console.log(parsedData);}
             returnVal=parsedData
         }
     })
@@ -35,10 +36,10 @@ function readCacheData(){
 function writeCacheData(data){
     fs.writeFile(cacheFileName, JSON.stringify(data), 'utf8', function(err){
         if (err){
-            console.log('Error writing cache file');
+            if (debugMode){console.log('Error writing cache file');}
         }
         else{
-            console.log('Successfully wrote cache file');
+            if (debugMode){console.log('Successfully wrote cache file');}
         }
     });
 }
@@ -53,7 +54,7 @@ app.post('/', function (req, res) {
     let today = new Date()
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();   
     if (date in cachedData){
-        console.log('using cached value to calculate output')
+        if (debugMode){console.log('using cached value to calculate output')}
         let outputRate=cachedData[date]
         let outputText = outputRate*amount;
         res.render('index', { output: outputText, error: null});
@@ -71,8 +72,9 @@ app.post('/', function (req, res) {
                 }
                 else {
                     cachedData[date]=outputRate;
+                    if (debugMode){console.log(cachedData);}
                     writeCacheData(cachedData);
-                    console.log(cachedData);
+                    if (debugMode){console.log(cachedData);}
                     outputText = outputRate*amount;
                     res.render('index', { output: outputText, error: null});
                 }
