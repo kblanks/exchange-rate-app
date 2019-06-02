@@ -46,7 +46,7 @@ function writeCacheData(data){
 
 app.get('/', function (req, res){
     cachedData = readCacheData();
-    res.render('index', {output: null, error: null});
+    res.render('index', {input: null, output: null, error: null});
 })
 
 app.post('/', function (req, res) {
@@ -57,18 +57,18 @@ app.post('/', function (req, res) {
         if (debugMode){console.log('using cached value to calculate output')}
         let outputRate=cachedData[date]
         let outputText = outputRate*amount;
-        res.render('index', { output: outputText, error: null});
+        res.render('index', {input: amount, output: outputText, error: null});
     }
     else {
         request(url, function(err, response, body) {
             if (err) {
-                res.render('index', { output: null, error: 'ERROR - ruh roh'});
+                res.render('index', {input:null, output: null, error: 'ERROR - ruh roh'});
             }
             else {
                 let output = JSON.parse(body);
                 outputRate = output.rates.USD;
                 if(outputRate == undefined){
-                    res.render('index', {output: null, error: 'Error, problem with request'});
+                    res.render('index', {input: null, output: null, error: 'Error, problem with request'});
                 }
                 else {
                     cachedData[date]=outputRate;
@@ -76,7 +76,7 @@ app.post('/', function (req, res) {
                     writeCacheData(cachedData);
                     if (debugMode){console.log(cachedData);}
                     outputText = outputRate*amount;
-                    res.render('index', { output: outputText, error: null});
+                    res.render('index', {input: amount, output: outputText, error: null});
                 }
             }
         })

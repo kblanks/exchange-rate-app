@@ -1,5 +1,5 @@
 body{
-    width: 300px;
+    width: 25%;
     margin: 0 auto;
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
@@ -30,5 +30,10 @@ input[type=submit] {
 }
 
 .container {
-    outline: 1px black;
+}
+
+.output-container {
+    margin: auto;
+    width: 50%;
+    border: 1px solid black;
 }

@@ -18,13 +18,25 @@
                     <input type="submit" value="Convert">
                 </form>
             </fieldset>
-            <% if(output != null){ %>
-                <p><%= output %></p>
-            <% } %>
-
-            <% if(error != null){ %>
-                <p><%= error %></p>
-            <% } %>
         </div>
+        <% if(output != null){ %>
+            <div class="output-container">
+                <table>
+                    <tr>
+                        <th>EUR</th>
+                        <th>USD</th>
+                    </tr>
+                    <tr>
+                        <td><%= input %></td>
+                        <td><%= output %></td>
+                    </tr>
+                </table>
+            </div>
+        <% } %>
+        <% if(error != null){ %>
+            <div class="output-container">
+            <p><%= error %></p>
+            </div>
+        <% } %>
     </body>    
 </html>
