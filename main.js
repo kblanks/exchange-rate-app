@@ -56,7 +56,7 @@ app.post('/', function (req, res) {
     if (date in cachedData){
         if (debugMode){console.log('using cached value to calculate output')}
         let outputRate=cachedData[date]
-        let outputText = outputRate*amount;
+        let outputText = (outputRate*amount).toFixed(2);
         res.render('index', {input: amount, output: outputText, error: null});
     }
     else {
@@ -75,7 +75,7 @@ app.post('/', function (req, res) {
                     if (debugMode){console.log(cachedData);}
                     writeCacheData(cachedData);
                     if (debugMode){console.log(cachedData);}
-                    outputText = outputRate*amount;
+                    outputText = (outputRate*amount).toFixed(2);
                     res.render('index', {input: amount, output: outputText, error: null});
                 }
             }

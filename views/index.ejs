@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <div class="container">
+        <div>
             <fieldset>
                 <legend>Convert EUR to USD</legend>
                 <form action="/" method="post">
@@ -20,7 +20,7 @@
             </fieldset>
         </div>
         <% if(output != null){ %>
-            <div class="output-container">
+            <div>
                 <table>
                     <tr>
                         <th>EUR</th>
@@ -34,7 +34,7 @@
             </div>
         <% } %>
         <% if(error != null){ %>
-            <div class="output-container">
+            <div>
             <p><%= error %></p>
             </div>
         <% } %>

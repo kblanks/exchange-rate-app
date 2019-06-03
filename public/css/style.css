@@ -29,11 +29,18 @@ input[type=submit] {
     color: white;
 }
 
-.container {
+div{
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.output-container {
-    margin: auto;
-    width: 50%;
+table {
+    margin-top: 25px;
+    width: 100%;
     border: 1px solid black;
+}
+
+th, td {
+    text-align: center;
+    padding: 5px;
 }
