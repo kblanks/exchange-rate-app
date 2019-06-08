@@ -44,3 +44,7 @@ th, td {
     text-align: center;
     padding: 5px;
 }
+
+th{
+    background-color: #c8cfd6;
+}
